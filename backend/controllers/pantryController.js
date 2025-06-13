@@ -30,6 +30,18 @@ const getPantryItem = async (request, response) => {
 const newPantryItem = async (request, response) => {
     const {name, quantity, expirationDate} = request.body
 
+    let emptyFields = []
+
+    if(!name) {
+        emptyFields.push('name')
+    }
+    if(!quantity){
+        emptyFields.push('quantity')
+    }
+    if(emptyFields.length > 0){
+        return response.status(400).json({ error: 'Please fill in the name and quantity fields', emptyFields})
+    }
+
     try{
         const pantryItem = await PantryItems.create({name, quantity, expirationDate})
         response.status(200).json(pantryItem)

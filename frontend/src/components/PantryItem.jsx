@@ -1,5 +1,7 @@
 import { usePantryItemContext } from "../hooks/usePantryItemContext"
 
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+
 const PantryItem = ({ pantryItem }) => {
     const { dispatch } = usePantryItemContext()
 
@@ -19,8 +21,8 @@ const PantryItem = ({ pantryItem }) => {
             <h4>{pantryItem.name}</h4>
             <p><strong>Quantity: </strong>{pantryItem.quantity}</p>
             <p><strong>Expiration Date: </strong>{pantryItem.expirationDate}</p>
-            <p><strong>Date Added: </strong>{pantryItem.createdAt}</p>
-            <span onClick={handleClick}>delete</span>
+            <p>Added {formatDistanceToNow(new Date(pantryItem.createdAt), {addSuffix: true})}</p>
+            <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
         </div>
     )
 }

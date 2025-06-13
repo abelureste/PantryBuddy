@@ -7,6 +7,7 @@ const NewItemForm = () => {
     const [quantity, setQuantity] = useState('')
     const [expirationDate, setExpirationDate ] = useState('')
     const [error, setError] = useState(null)
+    const [emptyFields, setEmptyFields] = useState([])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -24,12 +25,14 @@ const NewItemForm = () => {
 
         if (!response.ok) {
             setError(json.error)
+            setEmptyFields(json.emptyFields)
         }
         if (response.ok) {
             setName('')
             setQuantity('')
             setExpirationDate('')
             setError(null)
+            setEmptyFields([])
             console.log('New workout added', json)
             dispatch({type: 'CREATE_PANTRY_ITEM', payload: json})
         }
@@ -40,10 +43,10 @@ const NewItemForm = () => {
             <h3>Add a new Item</h3>
 
             <label>Item name:</label>
-            <input type="text" onChange={(e) => setName(e.target.value)} value={name}></input>
+            <input type="text" onChange={(e) => setName(e.target.value)} value={name} className={emptyFields.includes('name') ? 'error' : ''}></input>
 
             <label>Quantity:</label>
-            <input type="number" onChange={(e) => setQuantity(e.target.value)} value={quantity}></input>
+            <input type="number" onChange={(e) => setQuantity(e.target.value)} value={quantity} className={emptyFields.includes('quantity') ? 'error' : ''}></input>
 
             <label>Expiration Date:</label>
             <input type="date" onChange={(e) => setExpirationDate(e.target.value)} value={expirationDate}></input>
