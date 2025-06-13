@@ -28,10 +28,10 @@ const getPantryItem = async (request, response) => {
 
 // create a new pantry item
 const newPantryItem = async (request, response) => {
-    const {name, size, expirationDate} = request.body
+    const {name, quantity, expirationDate} = request.body
 
     try{
-        const pantryItem = await PantryItems.create({name, size, expirationDate})
+        const pantryItem = await PantryItems.create({name, quantity, expirationDate})
         response.status(200).json(pantryItem)
     } catch (error) {
         response.status(400).json({error: error.message})
@@ -51,7 +51,7 @@ const deletePantryItem = async (request, response) => {
     if (!pantryItem) {
         return response.status(400).json({error: 'No pantry item found'})
     }
-    response.status(200).json({pantryItem})
+    response.status(200).json(pantryItem)
 }
 
 

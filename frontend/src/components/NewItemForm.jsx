@@ -1,15 +1,17 @@
 import { useState } from "react"
+import { usePantryItemContext } from "../hooks/usePantryItemContext"
 
 const NewItemForm = () => {
+    const { dispatch } = usePantryItemContext()
     const [name, setName] = useState('')
-    const [size, setSize] = useState('')
+    const [quantity, setQuantity] = useState('')
     const [expirationDate, setExpirationDate ] = useState('')
     const [error, setError] = useState(null)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        const pantryItem = {name, size, expirationDate}
+        const pantryItem = {name, quantity, expirationDate}
 
         const response = await fetch('/api/pantryData', {
             method: 'POST',
@@ -25,10 +27,11 @@ const NewItemForm = () => {
         }
         if (response.ok) {
             setName('')
-            setSize('')
+            setQuantity('')
             setExpirationDate('')
             setError(null)
             console.log('New workout added', json)
+            dispatch({type: 'CREATE_PANTRY_ITEM', payload: json})
         }
     }
 
@@ -39,8 +42,8 @@ const NewItemForm = () => {
             <label>Item name:</label>
             <input type="text" onChange={(e) => setName(e.target.value)} value={name}></input>
 
-            <label>Size:</label>
-            <input type="number" onChange={(e) => setSize(e.target.value)} value={size}></input>
+            <label>Quantity:</label>
+            <input type="number" onChange={(e) => setQuantity(e.target.value)} value={quantity}></input>
 
             <label>Expiration Date:</label>
             <input type="date" onChange={(e) => setExpirationDate(e.target.value)} value={expirationDate}></input>

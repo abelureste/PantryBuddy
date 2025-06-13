@@ -1,11 +1,12 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { usePantryItemContext } from '../hooks/usePantryItemContext'
 
 // import components
 import PantryItem from '../components/PantryItem'
 import NewItemForm from '../components/NewItemForm'
 
 const Home = () => {
-    const [pantryItems, allPantryItems] = useState(null)
+    const {pantryItems, dispatch} = usePantryItemContext()
 
     useEffect(() => {
         const fetchPantryData = async () => {
@@ -13,7 +14,7 @@ const Home = () => {
             const json = await response.json()
 
             if (response.ok) {
-                allPantryItems(json)
+                dispatch({type: 'SET_PANTRY_ITEM', payload: json})
             }
         }
 

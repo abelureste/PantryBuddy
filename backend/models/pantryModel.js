@@ -9,7 +9,7 @@ const pantrySchema = new Schema({
         type: String,
         required: true
     },
-    size: {
+    quantity: {
         type: Number,
         required: true
     },
