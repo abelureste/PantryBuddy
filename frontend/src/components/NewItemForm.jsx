@@ -33,7 +33,7 @@ const NewItemForm = () => {
             setExpirationDate('')
             setError(null)
             setEmptyFields([])
-            console.log('New workout added', json)
+            console.log('New pantry item added', json)
             dispatch({type: 'CREATE_PANTRY_ITEM', payload: json})
         }
     }
