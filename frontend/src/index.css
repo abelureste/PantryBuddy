@@ -67,6 +67,21 @@ header a {
   color: #333;
 }
 
+/* search bar */
+.searchBar {
+  display: inline-flex;
+  width: 100%;
+}
+
+.searchBar label {
+  min-width: 120px;
+  margin: auto;
+}
+
+.searchBar input {
+  margin: auto;
+}
+
 /* new item form */
 label, input {
   display: block;
