@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // pages & components
-import Home from './pages/home'
+import Homepage from './pages/homepage'
+import PantryInventory from './pages/pantryinventory'
 import Navbar from './components/NavBar'
 
 function App() {
@@ -9,10 +10,11 @@ function App() {
   return (
     <div className='App'>
       <BrowserRouter>
-        <Navbar/>
+      <Navbar/>
         <div className='pages'>
           <Routes>
-            <Route path='/' element={<Home />}></Route>
+            <Route path='/' element={<Homepage />}/>
+            <Route path='/mypantry' element={<PantryInventory />}/>
           </Routes>
         </div>
       </BrowserRouter>

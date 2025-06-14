@@ -1,5 +1,5 @@
 /* google font */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;800&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
 
 /* layout */
 :root {
@@ -9,7 +9,7 @@
 body {
   background: #f1f1f1;
   margin: 0;
-  font-family: "Poppins";
+  font-family: "Nunito";
 } 
 header {
   background: #fff;
@@ -38,7 +38,71 @@ header a {
 }
 
 /* homepage */
-.home {
+.homepageMain {
+  height: 60vh;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0 5%;
+  background-color: #fff;
+  background-image: url("/mainhomepage-background2.png");
+  background-size: cover;
+  background-position: center;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+.homepageMain h1 {
+  color: var(--primary);
+  font-size: 70px;
+  width: 100%;
+  text-align: end;
+  margin: 0px;
+}
+.homepageMain h2 {
+  font-size: 35px;
+  text-align: end;
+  width: 100%;
+  margin: 0px;
+}
+.padTop {
+  padding-top: 20px;
+}
+.homepageMission {
+  height: auto;
+  max-width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+.missionText {
+  flex: 1;
+  width: 50%;
+}
+.missionVideo {
+  flex: 1;
+  width: 50%;
+}
+.missionVideo iframe {
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+.homepageMission h1 {
+  color: var(--primary);
+  margin: 0px;
+  font-size: 35px;
+}
+
+/* pantry inventory page */
+.pantryInventory {
   display: grid;
   grid-template-columns: 3fr 1fr;
   gap: 100px;
@@ -53,12 +117,13 @@ header a {
 }
 .pantryItem h4 {
   margin: 0 0 10px 0;
-  font-size: 1.2em;
+  font-size: 1.3em;
   color: var(--primary);
+  font-weight: 800;
 }
 .pantryItem p {
   margin: 0;
-  font-size: 0.9em;
+  font-size: 1em;
   color: #555;
 }
 .pantryItem span {
@@ -77,12 +142,10 @@ header a {
   display: inline-flex;
   width: 100%;
 }
-
 .searchBar label {
-  min-width: 120px;
+  min-width: 105px;
   margin: auto;
 }
-
 .searchBar input {
   margin: auto;
 }
@@ -105,7 +168,7 @@ form button {
   border: 0;
   color: #fff;
   padding: 10px;
-  font-family: "Poppins";
+  font-family: "Nunito";
   border-radius: 4px;
   cursor: pointer;
 }
