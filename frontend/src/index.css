@@ -3,14 +3,14 @@
 
 /* layout */
 :root {
-  --primary: #1aac83;
+  --primary: #365d8a;
   --error: #e7195a;
 }
 body {
   background: #f1f1f1;
   margin: 0;
   font-family: "Poppins";
-}
+} 
 header {
   background: #fff;
 }
@@ -30,6 +30,11 @@ header a {
   max-width: 1400px;
   padding: 20px;
   margin: 0 auto;
+}
+
+/* navbar logo */
+.navLogo {
+  width: 150px;
 }
 
 /* homepage */

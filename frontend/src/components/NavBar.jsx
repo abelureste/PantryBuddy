@@ -6,7 +6,7 @@ const Navbar = () => {
         <header>
             <div className="container"> 
                 <Link to="/">
-                    <h1>PantryBuddy</h1>
+                    <img className='navLogo' src='/pantrypalLogo2-cropped-transparent.png'></img>
                 </Link>
             </div>
         </header>
