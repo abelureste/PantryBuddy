@@ -1,0 +1,26 @@
+const StatisticsHomepageCard = () => {
+
+    return (
+        <div>
+            <div className="padTop">
+                <div className="homepageStatistics">
+                    <div className="statisticsColumn">
+                        <img src="/foodwaste-chart.png" />
+                        <h1>Household food waste accounts for 40 - 50% of all food wasted in the United States</h1>
+                    </div>
+                    <div className="statisticsColumn">
+                        <img src="/foodwaste-graphic.png"/>
+                        <h1>6 pounds of edible food per household is wasted per week</h1>
+                    </div>
+                    <div className="statisticsColumn">
+                        <img src="/foodwaste-truck.png"></img>
+                        <h1>Each year, food waste in America can fill over 1 million dump trucks</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+
+}
+
+export default StatisticsHomepageCard

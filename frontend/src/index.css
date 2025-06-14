@@ -82,6 +82,11 @@ header a {
   border-radius: 4px;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
 }
+.homepageMission h1 {
+  color: var(--primary);
+  margin: 0px;
+  font-size: 35px;
+}
 .missionText {
   flex: 1;
   width: 50%;
@@ -95,11 +100,33 @@ header a {
   height: 100%;
   border-radius: 4px;
 }
-.homepageMission h1 {
-  color: var(--primary);
-  margin: 0px;
-  font-size: 35px;
+.homepageStatistics {
+  height: auto;
+  max-width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  flex-wrap: wrap;
+  align-items: flex;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
 }
+.homepageStatistics h1{
+  color: var(--primary);
+  text-align: center;
+}
+.statisticsColumn {
+  flex: 1;
+  width: 50%;
+  padding: 20px;
+  margin: auto;
+}
+.statisticsColumn img {
+  width: 100%;
+}
+
 
 /* pantry inventory page */
 .pantryInventory {
