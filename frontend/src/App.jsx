@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Homepage from './pages/homepage'
 import PantryInventory from './pages/pantryinventory'
 import Navbar from './components/NavBar'
+import Footer from './components/Footer'
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
             <Route path='/mypantry' element={<PantryInventory />}/>
           </Routes>
         </div>
+        <Footer/>
       </BrowserRouter>
     </div>
   )

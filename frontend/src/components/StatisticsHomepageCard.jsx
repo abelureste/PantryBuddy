@@ -10,11 +10,11 @@ const StatisticsHomepageCard = () => {
                     </div>
                     <div className="statisticsColumn">
                         <img src="/foodwaste-graphic.png"/>
-                        <h1>6 pounds of edible food per household is wasted per week</h1>
+                        <h1>On average, 6 pounds of edible food per household is wasted each week</h1>
                     </div>
                     <div className="statisticsColumn">
                         <img src="/foodwaste-truck.png"></img>
-                        <h1>Each year, food waste in America can fill over 1 million dump trucks</h1>
+                        <h1>Each year, household food waste in America can fill over 1 million dump trucks</h1>
                     </div>
                 </div>
             </div>
