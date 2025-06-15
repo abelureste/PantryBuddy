@@ -16,6 +16,7 @@ const StatisticsHomepageCard = () => {
                         <img src="/foodwaste-truck.png"></img>
                         <h1>Each year, household food waste in America can fill over 1 million dump trucks</h1>
                     </div>
+                    <p className="statisticsRow">Data collected by the <a href="https://www.nrdc.org/bio/andrea-collins/additional-research-household-food-waste">Natural Resources Defense Council</a></p>
                 </div>
             </div>
         </div>
