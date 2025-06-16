@@ -1,6 +1,6 @@
 import { usePantryItemContext } from "../hooks/usePantryItemContext"
 
-import { formatDistanceToNow, format } from 'date-fns'
+import { formatDistanceToNow, format, isPast, isValid } from 'date-fns'
 
 const PantryItem = ({ pantryItem }) => {
     const { dispatch } = usePantryItemContext()
@@ -16,6 +16,22 @@ const PantryItem = ({ pantryItem }) => {
         }
     }
 
+    const expirationDate = new Date(pantryItem.expirationDate)
+
+    const expirationStatus = () => {
+        if (!isValid(expirationDate)) {
+            return null
+        }
+
+        if (isPast(expirationDate)) {
+            return <p><div>Expired {formatDistanceToNow(expirationDate, {addSuffix: true})}</div></p>
+        } 
+        
+        else {
+            return <p>Expires {formatDistanceToNow(expirationDate, {addSuffix: true})}</p>
+        }
+    }
+
     return (
         <div className="pantryItem">
             <h4>{pantryItem.name}</h4>
@@ -23,7 +39,7 @@ const PantryItem = ({ pantryItem }) => {
             {pantryItem.expirationDate && new Date(pantryItem.expirationDate).getTime() !== 0 && (
                 <>
                     <p><strong>Expiration Date: </strong>{format(new Date(pantryItem.expirationDate), 'MM/dd/yyyy')}</p>
-                    <p>Expires {formatDistanceToNow(new Date(pantryItem.expirationDate), {addSuffix: true})}</p>
+                    { expirationStatus() }
                 </>
             )}
             <p>Added {formatDistanceToNow(new Date(pantryItem.createdAt), {addSuffix: true})}</p>

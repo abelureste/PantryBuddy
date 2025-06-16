@@ -158,7 +158,6 @@ header a {
   color: var(--primary);
 }
 
-
 /* pantry inventory page */
 .pantryInventory {
   display: grid;
@@ -183,6 +182,9 @@ header a {
   margin: 0;
   font-size: 1em;
   color: #555;
+}
+.pantryItem p div {
+  color: rgb(218, 14, 14);
 }
 .pantryItem span {
   position: absolute;
