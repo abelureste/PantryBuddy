@@ -166,6 +166,31 @@ header a {
   color: var(--primary);
 }
 /* dashboard */
+.dashboardWelcome {
+  height: auto;
+  margin-bottom: 20px;
+  padding: 20px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+.dashboardWelcomeLeft {
+  flex: 1;
+  width: 50px;
+}
+.dashboardWelcomeRight {
+  flex: 1;
+  width: 50px;
+  text-align: end;
+}
+.dashboardWelcome h3 {
+  margin: 0px;
+}
 .dashboardInfo {
   height: auto;
   max-width: 100%;
@@ -175,7 +200,7 @@ header a {
   flex-wrap: wrap;
   align-items: flex;
 }
-.dashboardLeft {
+.dashboardInfoLeft {
   flex: 1;
   padding: 20px;
   width: 50%;
@@ -183,11 +208,11 @@ header a {
   border-radius: 4px;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
 }
-.dashboardLeft h1 {
+.dashboardInfoLeft h1 {
   margin: 0 0 20px 0;
   text-align: center;
 }
-.dashboardRight {
+.dashboardInfoRight {
   flex: 1;
   padding: 20px;
   width: 50%;
@@ -195,9 +220,25 @@ header a {
   border-radius: 4px;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
 }
-.dashboardRight h1 {
+.dashboardInfoRight h1 {
   margin: 0 0 20px 0;
   text-align: center;
+}
+.dashboardRecipes {
+  height: auto;
+  margin: 20px 0 20px 0;
+  padding: 20px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+.dashboardRecipes h1 {
+  margin: 0px;
 }
 
 /* pantry inventory page */
