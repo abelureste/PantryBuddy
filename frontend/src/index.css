@@ -26,7 +26,14 @@ header a {
   color: #333;
   text-decoration: none;
 }
+.App{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 .pages{
+  flex: 1;
+  width: 100%;
   max-width: 1400px;
   padding: 20px;
   margin: 0 auto;
@@ -43,7 +50,6 @@ header a {
   height: 50px;
   background-color: #fff;
 }
-
 .footerContent {
   max-width: 1400px;
   display: flex;
@@ -51,10 +57,12 @@ header a {
   margin: 0 auto;
   align-items: center;
 }
-
 .footer a {
   text-decoration: none;
   color: var(--primary);
+}
+.footer p {
+  margin: 14px;
 }
 
 /* homepage */
