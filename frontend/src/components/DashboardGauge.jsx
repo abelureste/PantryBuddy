@@ -4,7 +4,7 @@ import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge'
 const settings = {
     width: 300,
     height: 300,
-    value: 60
+    value: 92
 }
 
 const DashboardGauge = () => {

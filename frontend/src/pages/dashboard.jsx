@@ -1,5 +1,7 @@
-import React from 'react';
+import { useEffect, useState } from 'react'
+import { usePantryItemContext } from "../hooks/usePantryItemContext";
 
+// import components
 import DashboardGauge from "../components/DashboardGauge"
 import PantryItem from "../components/PantryItem"
 
@@ -18,7 +20,36 @@ const TodaysDate = () => {
     )
 }
 
+const getExpiringSoonItems = (items) => {
+    if (!items) return []
+
+    const today = new Date()
+    const threeDaysFromNow = new Date()
+    threeDaysFromNow.setDate(today.getDate() + 3)
+
+    return items.filter(item => {
+        const expirationDate = new Date(item.expirationDate)
+        return expirationDate >= today && expirationDate <= threeDaysFromNow
+    })
+}
+
 const Dashboard = () => {
+    const {pantryItems, dispatch} = usePantryItemContext()
+
+    useEffect(() => {
+        const fetchPantryData = async () => {
+            const response = await fetch('/api/pantryData')
+            const json = await response.json()
+
+            if (response.ok) {
+                dispatch({type: 'SET_PANTRY_ITEM', payload: json})
+            }
+        }
+
+        fetchPantryData()
+    }, [])
+
+    const itemsExpiringSoon = getExpiringSoonItems(pantryItems).slice(0, 3)
 
     return (
         <div>
@@ -35,7 +66,15 @@ const Dashboard = () => {
                 </div>
                 <div className="dashboardInfoRight">
                     <h1>Expiring Soon</h1>
-                    <p>Items expiring soon go here <br/> DEV NOTES: Need to use PantryContext to display pantry item live</p>
+                    <div className='pantryItems'>
+                        {itemsExpiringSoon.length > 0 ? (
+                            itemsExpiringSoon.map(pantryItem => (
+                                <PantryItem key={pantryItem._id} pantryItem={pantryItem} />
+                            ))
+                        ) : (
+                            <p>No items expiring in the next 3 days.</p>
+                        )}
+                    </div>
                 </div>
             </div>
             <div className="dashboardRecipes">
