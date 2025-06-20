@@ -45,7 +45,9 @@ header a {
 }
 .navLinks {
   font-size: 18px;
-
+}
+.navLinks a {
+  user-select: none;
 }
 
 /* footer */
@@ -329,4 +331,37 @@ div.error {
   color: var(--error);
   border-radius: 4px;
   margin: 20px 0;
+}
+
+/* recipes page */
+.recipeSuggest {
+  height: auto;
+  margin-bottom: 20px;
+  padding: 20px;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: flex;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  text-align: center;
+}
+.recipeSuggest h1 {
+  margin: 5px 0 5px 0;
+}
+.recipeSuggest p {
+  margin: 5px 0 20px 0;
+}
+.recipeSuggest input {
+  margin: 0 10px 0 10px; 
+}
+.recipeSuggestInput {
+  display: inline-flex;
+  width: 100%;
+}
+.recipeSuggestInput label {
+  margin: auto;
+  width: 200px;
 }

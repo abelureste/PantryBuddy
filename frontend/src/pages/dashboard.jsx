@@ -78,7 +78,7 @@ const Dashboard = () => {
                 </div>
             </div>
             <div className="dashboardRecipes">
-                <h1>Recommended Recipes</h1>
+                <h1>Favorite Recipes</h1>
             </div>
         </div>
     )

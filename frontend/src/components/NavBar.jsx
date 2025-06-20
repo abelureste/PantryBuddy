@@ -16,7 +16,7 @@ const Navbar = () => {
                     <a>&nbsp; | &nbsp;</a>
                     <Link to='/mypantry'>Pantry Inventory</Link>
                     <a>&nbsp; | &nbsp;</a>
-                    <a>Recipes</a>
+                    <Link to='/recipes'>Recipes</Link>
                     <a>&nbsp; | &nbsp;</a>
                     <a>Shopping List</a>
                 </div>)}
