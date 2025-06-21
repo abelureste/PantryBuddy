@@ -4,6 +4,9 @@ import { usePantryItemContext } from "../hooks/usePantryItemContext";
 // import components
 import DashboardGauge from "../components/DashboardGauge"
 import PantryItem from "../components/PantryItem"
+import FavoriteRecipeCard from '../components/FavoriteRecipeCard';
+import { LineChart } from '@mui/x-charts';
+import { Link } from '@mui/material';
 
 const TodaysDate = () => {
     const today = new Date();
@@ -79,6 +82,11 @@ const Dashboard = () => {
             </div>
             <div className="dashboardRecipes">
                 <h1>Favorite Recipes</h1>
+                <div className='favRecipeCardMaster'>
+                    <FavoriteRecipeCard/>
+                    <FavoriteRecipeCard/>
+                    <FavoriteRecipeCard/>
+                </div>
             </div>
         </div>
     )

@@ -236,7 +236,7 @@ header a {
   padding: 20px;
   max-width: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex-wrap: wrap;
   align-items: flex;
   background-color: #fff;
@@ -364,4 +364,29 @@ div.error {
 .recipeSuggestInput label {
   margin: auto;
   width: 200px;
+}
+
+/* favorite recipes */
+.favRecipeCardMaster {
+  height: auto;
+  max-width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex;
+  gap: 10px;
+}
+.favRecipeCard {
+  flex: 1;
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+.favRecipeCard img {
+  width: 100%;
+  border-radius: 4px;
 }
