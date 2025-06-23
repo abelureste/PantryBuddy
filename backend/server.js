@@ -5,6 +5,7 @@ require('dotenv').config()
 const express = require('express')
 const mongoose = require('mongoose')
 const pantryRoutes = require('./routes/pantryData')
+const recipeRoutes = require('./routes/recipeData')
 
 // express app
 const app = express()
@@ -19,6 +20,7 @@ app.use((request, response, next) => {
 
 // routes
 app.use('/api/pantryData', pantryRoutes)
+app.use('/api/recipeData', recipeRoutes)
 
 // connect to database
 mongoose.connect(process.env.MONG_URI)
