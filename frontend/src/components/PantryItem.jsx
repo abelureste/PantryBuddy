@@ -1,5 +1,4 @@
 import { usePantryItemContext } from "../hooks/usePantryItemContext"
-
 import { formatDistanceToNow, format, isPast, isValid, addDays, isWithinInterval, isToday } from 'date-fns'
 
 const PantryItem = ({ pantryItem }) => {

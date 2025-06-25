@@ -1,7 +1,7 @@
-const FavoriteRecipeCard = () => {
+const RecipeCard = () => {
 
     return (
-        <div className="favRecipeCard">
+        <div className="recipeCard">
             <img src="/SAMPLEroastedChicken.png"></img>
             <h2>Roasted Chicken</h2>     
             <p>You have all ingredients to make this recipe!</p>       
@@ -9,4 +9,4 @@ const FavoriteRecipeCard = () => {
     )
 }
 
-export default FavoriteRecipeCard
+export default RecipeCard
