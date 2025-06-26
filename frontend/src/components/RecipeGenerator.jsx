@@ -1,35 +1,56 @@
-import { useState } from 'react'
+import { useRecipeGeneratorContext } from '../hooks/useRecipeGeneratorContext'
 
 const RecipeGenerator = () => {
-    const [prompt, setPrompt] = useState('')
-    const [response, setResponse] = useState('')
+  const { prompt, setPrompt, aiResponse, setAiResponse, loading, setLoading } = useRecipeGeneratorContext()
 
-    const handleSubmit = async(e) => {
-        e.preventDefault()
-        setLoading(true)
+  const handleSubmit = async (e) => {
+    console.log('Submitted')
 
-        const res = await fetch('/api/ai', {
-            method: 'POST',
-            headers: { 'Content-Type' : 'application/json' },
-            body: JSON.stringify({ prompt })
-        })
+    e.preventDefault()
+    setLoading(true)
 
-        const data = await res.json()
-        setResponse(data.response)
-        setLoading(false)
+    try {
+      const response = await fetch('/api/aiData', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt }),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setAiResponse(data.response || 'No recipe found.')
+      } else {
+        setAiResponse('Failed to generate recipe.')
+      }
+      
+    } catch (error) {
+      console.error(error)
+      setAiResponse('Something went wrong while generating a recipe.')
     }
 
-    return (
-        <div>
-            <h1>Recipe Generator</h1>
-                <p>Don't know what to cook? Generate a recipe based on your pantry inventory.</p>
-                <form className="recipeSuggestInput">
-                    <label>What are you feeling?</label>
-                    <input type="text" value={prompt}></input>
-                    <button type="submit">Generate</button>
-                </form>
-        </div>        
-    )
+    setLoading(false)
+  }
+
+  return (
+    <div>
+      <h1>Recipe Generator</h1>
+      <p>Don't know what to cook? Generate a recipe based on your pantry inventory.</p>
+      <form className="recipeSuggestInput" onSubmit={handleSubmit}>
+        <label>What are you feeling?</label>
+        <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)}/>
+        <button type="submit">Generate</button>
+      </form>
+
+      {loading && <p>Loading...</p>}
+      {aiResponse && (
+        <div className="recipeResponse">
+          <h3>Suggested Recipe:</h3>
+          <p>{aiResponse}</p>
+        </div>
+      )}
+    </div>
+  )
 }
 
 export default RecipeGenerator

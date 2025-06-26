@@ -3,24 +3,30 @@
 require('dotenv').config()
 
 const express = require('express')
+const cors = require('cors')
 const mongoose = require('mongoose')
-const pantryRoutes = require('./routes/pantryData')
-const recipeRoutes = require('./routes/recipeData')
 
 // express app
 const app = express()
 
 // middleware
+app.use(cors())
 app.use(express.json())
+
+// routes
+const pantryRoutes = require('./routes/pantryData')
+const recipeRoutes = require('./routes/recipeData')
+const aiRoutes = require('./routes/aiData')
 
 app.use((request, response, next) => {
     console.log(request.path, request.method)
     next()
 })
 
-// routes
+// use routes
 app.use('/api/pantryData', pantryRoutes)
 app.use('/api/recipeData', recipeRoutes)
+app.use('/api/aiData', aiRoutes)
 
 // connect to database
 mongoose.connect(process.env.MONG_URI)

@@ -9,6 +9,7 @@ import Recipes from './pages/recipes'
 // components
 import Navbar from './components/NavBar'
 import Footer from './components/Footer'
+import { RecipeGeneratorProvider } from './context/RecipeGeneratorContext'
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
             <Route path='/' element={<Homepage />}/>
             <Route path='/dashboard' element={<Dashboard />}/>
             <Route path='/mypantry' element={<PantryInventory />}/>
-            <Route path='/recipes' element={<Recipes />}/>
+              <Route path='/recipes' element={<Recipes />}/>
           </Routes>
         </div>
         <Footer/>

@@ -1,11 +1,11 @@
-
 const express = require('express')
-const {
 
+const {
+    sendPromptToGemini,
 } = require('../controllers/aiController')
 
 const router = express.Router()
 
-router.post('', handlePrompt)
+router.post('/', sendPromptToGemini)
 
 module.exports = router
