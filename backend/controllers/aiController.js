@@ -11,13 +11,22 @@ const sendPromptToGemini = async (request, response) => {
 
     try {
         const aiResponse = await axios.post(
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent',
             {
                 contents: [{ parts: [{ text: prompt }] }],
+                // The system instruction is updated to match your new schema
+                system_instruction: {
+                    parts: [{
+                        text: `You are a recipe creation assistant. Respond with only a valid JSON object that follows this exact schema: {"recipeName": "string","recipeDescription": "string","recipeIngredients": [{"ingredientName": "string","ingredientQuantity":     "string"}],"recipeInstructions": [{"instructionStep": 1,"instructionDescription": "string"}]}`
+                    }]
+                },
+                generationConfig: {
+                    "response_mime_type": "application/json"
+                }
             },
             {
-                headers : { 'Content-Type': 'application/json'},
-                params: { key: process.env.GEMINI_API_KEY},
+                headers: { 'Content-Type': 'application/json' },
+                params: { key: process.env.GEMINI_API_KEY },
             }
         )
 
