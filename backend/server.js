@@ -17,6 +17,7 @@ app.use(express.json())
 const pantryRoutes = require('./routes/pantryData')
 const recipeRoutes = require('./routes/recipeData')
 const aiRoutes = require('./routes/aiData')
+const expiredRoutes = require('./routes/expiredData')
 
 app.use((request, response, next) => {
     console.log(request.path, request.method)
@@ -27,6 +28,7 @@ app.use((request, response, next) => {
 app.use('/api/pantryData', pantryRoutes)
 app.use('/api/recipeData', recipeRoutes)
 app.use('/api/aiData', aiRoutes)
+app.use('/api/expiredData', expiredRoutes)
 
 // connect to database
 mongoose.connect(process.env.MONG_URI)
