@@ -1,12 +1,25 @@
 // Contains code interacting with MongoDB database
 
 const PantryItems = require('../models/pantryModel')
+const PantryStats = require('../models/pantryStatsModel') // <-- Import the new stats model
 const mongoose = require('mongoose')
 
 // get all pantry items
 const allPantryItems = async (request, response) => {
-    const pantryItems = await PantryItems.find({}).sort({createdAt: -1})
+    const newlyExpiredItems = await PantryItems.find({
+        expirationDate: { $lte: new Date() },
+        isExpired: false
+    });
 
+    if (newlyExpiredItems.length > 0) {
+        // Use the new model to increment the expired count
+        await PantryStats.findOneAndUpdate({}, { $inc: { itemsExpired: newlyExpiredItems.length } }, { upsert: true });
+
+        const idsToUpdate = newlyExpiredItems.map(item => item._id);
+        await PantryItems.updateMany({ _id: { $in: idsToUpdate } }, { $set: { isExpired: true } });
+    }
+
+    const pantryItems = await PantryItems.find({}).sort({createdAt: -1})
     response.status(200).json(pantryItems)
 }
 
@@ -29,26 +42,22 @@ const getPantryItem = async (request, response) => {
 // create a new pantry item
 const newPantryItem = async (request, response) => {
     const {name, quantity, expirationDate} = request.body
-
     let emptyFields = []
 
-    if(!name) {
-        emptyFields.push('name')
-    }
-    if(!quantity){
-        emptyFields.push('quantity')
-    }
-    if(emptyFields.length > 0){
-        return response.status(400).json({ error: 'Please fill in the name and quantity fields', emptyFields})
-    }
+    if(!name) emptyFields.push('name')
+    if(!quantity) emptyFields.push('quantity')
+    if(emptyFields.length > 0) return response.status(400).json({ error: 'Please fill in all fields', emptyFields})
 
-    try{
+    try {
         const pantryItem = await PantryItems.create({name, quantity, expirationDate})
+        // Use the new model to increment the total items added count
+        await PantryStats.findOneAndUpdate({}, { $inc: { totalItemsAdded: 1 } }, { upsert: true });
         response.status(200).json(pantryItem)
     } catch (error) {
         response.status(400).json({error: error.message})
     }
 }
+
 
 // delete a pantry item
 const deletePantryItem = async (request, response) => {

@@ -1,13 +1,13 @@
 import { Box } from '@mui/material'
 import { Gauge, gaugeClasses } from '@mui/x-charts/Gauge'
 
-const settings = {
+const DashboardGauge = ({ value }) => {
+
+  const settings = {
     width: 300,
     height: 300,
-    value: 92
-}
-
-const DashboardGauge = () => {
+    value: value,
+  }
 
     return (
         <Box display="flex" justifyContent="center" alignItems="center">

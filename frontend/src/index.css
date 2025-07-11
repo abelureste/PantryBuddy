@@ -100,6 +100,14 @@ header a {
   width: 100%;
   margin: 0px;
 }
+.homepageMain form {
+  padding-top: 20px;
+}
+.homepageMain form button{
+  padding: 15px 15px 15px 15px;
+  margin: 0 0 0 20px;
+  font-size: 20px;
+}
 .padTop {
   padding-top: 20px;
 }
@@ -171,6 +179,7 @@ header a {
   text-decoration: none;
   color: var(--primary);
 }
+
 /* dashboard */
 .dashboardWelcome {
   height: auto;

@@ -7,7 +7,9 @@ export default defineConfig({
   server: {
     proxy: {'/api/pantryData': 'http://localhost:4000/',
       '/api/aiData': 'http://localhost:4000',
-      '/api/recipeData': 'http://localhost:4000'
+      '/api/recipeData': 'http://localhost:4000',
+      '/api/expiredData': 'http://localhost:4000',
+      '/api/pantryStats': 'http://localhost:4000',
     }
   }
 })

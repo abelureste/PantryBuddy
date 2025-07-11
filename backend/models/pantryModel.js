@@ -17,6 +17,10 @@ const pantrySchema = new Schema ({
         type: Date,
         default: 'none',
         required: false
+    },
+    isExpired: {
+        type: Boolean,
+        default: false
     }
 }, {timestamps: true})
 

@@ -1,5 +1,4 @@
 import { usePantryItemContext } from "../hooks/usePantryItemContext"
-import { useEffect } from 'react'
 import { formatDistanceToNow, format, isPast, isValid, addDays, isWithinInterval } from 'date-fns'
 
 const PantryItem = ({ pantryItem }) => {
@@ -16,39 +15,7 @@ const PantryItem = ({ pantryItem }) => {
         }
     }
 
-    const incrementExpiredCount = async () => {
-        try {
-            const getResponse = await fetch('/api/expiredData')
-            if (!getResponse.ok) throw new Error('Failed to get expired count.')
-            
-            const currentData = await getResponse.json()
-            const currentCount = currentData.count
-
-            const newCount = currentCount + 1
-
-            const response = await fetch('/api/expiredData', {
-                method: 'PATCH',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ count: newCount })
-            })
-
-            if (response.ok) {
-                console.log('Expired count increased to: ', newCount)
-            } else {
-                console.error('Failed to update expired count.')
-            }
-        } catch (error) {
-            console.error(error)
-        }
-    }
-
     const expirationDate = new Date(pantryItem.expirationDate)
-
-    useEffect(() => {
-        if (isPast(expirationDate)) {
-            incrementExpiredCount()
-        }
-    }, [expirationDate]) 
 
     const expirationStatus = () => {
         const today = new Date();

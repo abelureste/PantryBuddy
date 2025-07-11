@@ -5,8 +5,6 @@ import { usePantryItemContext } from "../hooks/usePantryItemContext";
 import DashboardGauge from "../components/DashboardGauge"
 import PantryItem from "../components/PantryItem"
 import RecipeCard from '../components/RecipeCard';
-import { LineChart } from '@mui/x-charts';
-import { Link } from '@mui/material';
 
 const TodaysDate = () => {
     const today = new Date();
@@ -38,6 +36,8 @@ const getExpiringSoonItems = (items) => {
 
 const Dashboard = () => {
     const {pantryItems, dispatch} = usePantryItemContext()
+    const [stats, setStats] = useState({ totalItemsAdded: 0, itemsExpired: 0 });
+
 
     useEffect(() => {
         const fetchPantryData = async () => {
@@ -49,10 +49,25 @@ const Dashboard = () => {
             }
         }
 
+        const fetchPantryStats = async () => {
+            const response = await fetch('/api/pantryStatsData')
+            const json = await response.json()
+
+            if (response.ok) {
+                setStats(json)
+            }
+        }
+
         fetchPantryData()
-    }, [])
+        fetchPantryStats()
+    }, [dispatch])
 
     const itemsExpiringSoon = getExpiringSoonItems(pantryItems).slice(0, 3)
+
+    const itemsUsed = stats.totalItemsAdded - stats.itemsExpired;
+    const utilizationPercentage = stats.totalItemsAdded > 0
+        ? Math.round((itemsUsed / stats.totalItemsAdded) * 100)
+        : 0;
 
     return (
         <div>
@@ -63,9 +78,12 @@ const Dashboard = () => {
             <div className="dashboardInfo"> 
                 <div className="dashboardInfoLeft">
                     <h1>Pantry Utilization</h1>
-                    <DashboardGauge/>
+                    <DashboardGauge value={utilizationPercentage} />
                     <h3>Statistics</h3>
-                    <p>Items Finished: <br/> Items Thrown Away: </p>
+                    <p>
+                        Total Items Added: {stats.totalItemsAdded} <br/>
+                        Items Thrown Away: {stats.itemsExpired}
+                    </p>
                 </div>
                 <div className="dashboardInfoRight">
                     <h1>Expiring Soon</h1>
