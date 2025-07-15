@@ -5,6 +5,8 @@ import Homepage from './pages/homepage'
 import Dashboard from './pages/dashboard'
 import PantryInventory from './pages/pantryinventory'
 import Recipes from './pages/recipes'
+import Login from './pages/login'
+import Register from './pages/register'
 
 // components
 import Navbar from './components/NavBar'
@@ -22,7 +24,9 @@ function App() {
             <Route path='/' element={<Homepage />}/>
             <Route path='/dashboard' element={<Dashboard />}/>
             <Route path='/mypantry' element={<PantryInventory />}/>
-              <Route path='/recipes' element={<Recipes />}/>
+            <Route path='/recipes' element={<Recipes />}/>
+            <Route path='/login' element={<Login />}/>
+            <Route path='/register' element={<Register />} />
           </Routes>
         </div>
         <Footer/>

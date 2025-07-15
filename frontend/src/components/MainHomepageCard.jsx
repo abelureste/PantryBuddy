@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const MainHomepageCard = () => {
 
     return (
@@ -5,8 +7,7 @@ const MainHomepageCard = () => {
             <h1>Consume Smarter</h1>
             <h2>Track your pantry with PantryPal</h2>
             <form>
-                <button>Login</button>
-                <button>Register</button>
+                <Link to='/login'><button>Get Started</button></Link>
             </form>
         </div>
     )

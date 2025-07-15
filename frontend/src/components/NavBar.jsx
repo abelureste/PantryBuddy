@@ -6,6 +6,7 @@ const Navbar = () => {
 
     return (
         <header>
+            {location.pathname != '/login' && location.pathname != '/register' && (
             <div className="container"> 
                 <Link to="/">
                     <img className='navLogo' src='/pantrypalLogo2-cropped-transparent.png'></img>
@@ -20,7 +21,7 @@ const Navbar = () => {
                     <a>&nbsp; | &nbsp;</a>
                     <a>Shopping List</a>
                 </div>)}
-            </div>
+            </div>)}
         </header>
     )
 }
