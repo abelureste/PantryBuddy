@@ -375,6 +375,26 @@ div.error {
   margin: auto;
   width: 200px;
 }
+.recipeSuggestGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0 20px; /* Adjust the gap between columns as needed */
+}
+.recipeSuggestIngredients {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border-radius: 4px;
+  box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+}
+.recipeSuggestInstructions {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
 
 /* favorite recipes */
 .recipeCardMaster {

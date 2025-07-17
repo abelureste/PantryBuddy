@@ -64,6 +64,7 @@ const newPantryItem = async (request, response) => {
             { $inc: { totalItemsAdded: 1 } }, 
             { upsert: true, new: true } // Create if it doesn't exist
         )
+        response.status(200).json(pantryItem)        
     } catch (error) {
         response.status(400).json({error: error.message})
     }
@@ -110,5 +111,5 @@ module.exports = {
     getPantryItem,
     newPantryItem,
     deletePantryItem,
-    updatePantryItem
+    updatePantryItem,
 }

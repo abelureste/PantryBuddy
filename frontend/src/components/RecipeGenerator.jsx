@@ -47,7 +47,7 @@ const RecipeGenerator = () => {
         <button type="submit">Generate</button>
       </form>
 
-      {loading && <p>Loading...</p>}
+      {loading && <p className='recipeLoad'>Loading...</p>}
 
       {aiResponse && (
         <div className="recipeResponse">
@@ -59,9 +59,9 @@ const RecipeGenerator = () => {
               <p>{aiResponse.recipeDescription}</p>
 
               <h4>Ingredients</h4>
-              <div>
+              <div className="recipeSuggestGrid">
                 {aiResponse.recipeIngredients?.map((ingredient, index) => (
-                  <p key={index}>
+                  <p className='recipeSuggestIngredients' key={index}>
                     {ingredient.ingredientQuantity} {ingredient.ingredientName}
                   </p>
                 ))}
@@ -70,7 +70,7 @@ const RecipeGenerator = () => {
               <h4>Instructions</h4>
               <div>
                 {aiResponse.recipeInstructions?.map((instruction) => (
-                  <p key={instruction.instructionStep}>
+                  <p className='recipeSuggestInstructions' key={instruction.instructionStep}>
                     {instruction.instructionDescription}
                   </p>
                 ))}

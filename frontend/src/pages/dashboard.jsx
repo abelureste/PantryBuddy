@@ -42,7 +42,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchPantryData = async () => {
             const token = localStorage.getItem('token')
-            if (!token) return; // Don't fetch if no token
+            if (!token) return; // don't fetch if no token
             const response = await fetch('/api/pantryData', {
                 headers: { 'Authorization': `Bearer ${token}` }
             })
@@ -54,13 +54,19 @@ const Dashboard = () => {
         }
 
         const fetchPantryStats = async () => {
-            const response = await fetch('/api/pantryStatsData')
+            const token = localStorage.getItem('token');
+            if (!token) return;
+
+            const response = await fetch('/api/pantryStatsData', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
             const json = await response.json()
 
             if (response.ok) {
                 setStats(json)
             }
         }
+
 
         const fetchUserData = async () => {
             const token = localStorage.getItem('token')
@@ -79,6 +85,31 @@ const Dashboard = () => {
         fetchPantryStats()
         fetchUserData()
     }, [dispatch])
+
+const handleReset = async () => {
+        if (window.confirm("Are you sure you want to reset your statistics? This cannot be undone.")) {
+            const token = localStorage.getItem('token')
+            if (!token) {
+                console.error('You must be logged in to reset stats.')
+                return;
+            }
+    
+            const response = await fetch('/api/pantryStatsData', {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+    
+            const json = await response.json();
+    
+            if (response.ok) {
+                setStats(json);
+            } else {
+                console.error('Failed to reset stats:', json.error)
+            }
+        }
+    }
 
     const itemsExpiringSoon = getExpiringSoonItems(pantryItems).slice(0, 3)
 
@@ -102,6 +133,9 @@ const Dashboard = () => {
                         Total Items Added: {stats.totalItemsAdded} <br/>
                         Items Thrown Away: {stats.itemsExpired}
                     </p>
+                    <form>
+                        <button onClick={handleReset}>Reset Statistics</button>
+                    </form>
                 </div>
                 <div className="dashboardInfoRight">
                     <h1>Expiring Soon</h1>
