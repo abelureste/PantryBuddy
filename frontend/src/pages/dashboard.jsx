@@ -83,7 +83,14 @@ const Dashboard = () => {
         }
 
         const fetchRecipes = async () => {
-            const response = await fetch('/api/recipeData')
+            const token = localStorage.getItem('token'); // get the token
+            if (!token) return; // don't fetch if the user is not logged in
+
+            const response = await fetch('/api/recipeData', {
+                headers: {
+                    'Authorization': `Bearer ${token}` // add the token to the header
+                }
+            });
             const json = await response.json()
 
             if (response.ok) {
@@ -164,9 +171,13 @@ const handleReset = async () => {
             <div className="dashboardRecipes">
                 <h1>Favorite Recipes</h1>
                 <div className="recipeCardMaster">
-                    {recipes.slice(0, 4).map(recipe => (
-                        <RecipeCard key={recipe._id} recipe={recipe} />
-                    ))}
+                    {recipes.length > 0 ? (
+                        recipes.slice(0, 4).map(recipe => (
+                            <RecipeCard key={recipe._id} recipe={recipe} />
+                        )) 
+                    ) : (
+                        <p>No recipes added.</p>
+                    )}
                 </div>
             </div>
         </div>

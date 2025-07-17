@@ -8,7 +8,12 @@ const Recipes = () => {
 
     useEffect(() => {
         const fetchRecipes = async () => {
-            const response = await fetch('/api/recipeData')
+            const token = localStorage.getItem('token'); // get token
+            const response = await fetch('/api/recipeData', {
+                headers: {
+                    'Authorization': `Bearer ${token}` // add token to the header
+                }
+            })
             const json = await response.json()
 
             if (response.ok) {

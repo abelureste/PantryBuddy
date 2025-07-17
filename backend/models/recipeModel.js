@@ -44,6 +44,10 @@ const recipeSchema = new Schema ({
         type: [instructionsSchema],
         required: true
     },
+        user_id: {
+        type: String,
+        required: true
+    }
 })
 
 module.exports = mongoose.model('RecipeData', recipeSchema)

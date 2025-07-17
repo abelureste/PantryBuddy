@@ -5,7 +5,8 @@ const mongoose = require('mongoose')
 
 // get all recipes
 const allRecipes = async (request, response) => {
-    const recipes = await Recipe.find({}).sort({createdAt: -1})
+    const user_id = request.user._id; // get user ID from the protect middleware
+    const recipes = await Recipe.find({ user_id }).sort({createdAt: -1})
 
     response.status(200).json(recipes)
 }
@@ -39,7 +40,8 @@ const newRecipe = async (request, response) => {
         return response.status(400).json({ error: 'Please fill in the recipe name field', emptyFields})
     }
     try {
-        const recipe = await Recipe.create({recipeName, recipeDescription, recipeIngredients, recipeInstructions})
+        const user_id = request.user._id; // get user ID
+        const recipe = await Recipe.create({recipeName, recipeDescription, recipeIngredients, recipeInstructions, user_id}) // add user_id
         response.status(200).json(recipe)
     } catch (error) {
         response.status(400).json({error: error.message})

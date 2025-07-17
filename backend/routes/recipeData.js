@@ -14,7 +14,7 @@ const { protect } = require('../middleware/userMiddleware')
 const router = express.Router()
 
 // GET all recipes
-router.get('/', allRecipes)
+router.get('/', protect, allRecipes)
 
 // GET a single recipe
 router.get('/:id', getRecipe)

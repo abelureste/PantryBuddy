@@ -8,11 +8,11 @@ import Recipes from './pages/recipes'
 import RecipePage from './pages/RecipePage'
 import Login from './pages/login'
 import Register from './pages/register'
+import Settings from './pages/settings'
 
 // components
 import Navbar from './components/NavBar'
 import Footer from './components/Footer'
-import { RecipeGeneratorProvider } from './context/RecipeGeneratorContext'
 
 function App() {
 
@@ -29,6 +29,7 @@ function App() {
             <Route path='/recipe/:id' element={<RecipePage />}/>            
             <Route path='/login' element={<Login />}/>
             <Route path='/register' element={<Register />} />
+            <Route path='/settings' element={<Settings />} />
           </Routes>
         </div>
         <Footer/>

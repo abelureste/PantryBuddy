@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 
 const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null); // To display errors from the backend
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [error, setError] = useState(null) // To display errors from the backend
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -17,17 +18,16 @@ const Register = () => {
       body: JSON.stringify({ email, password }),
     });
 
-    const json = await response.json();
+    const json = await response.json()
 
     if (!response.ok) {
-      setError(json.error);
+      setError(json.error)
     }
     if (response.ok) {
-      // Handle successful registration, e.g., redirect to the login page
       console.log('Registration successful', json);
-      // You can redirect the user to the login page here
+      navigate('/login', { state: { message: 'Registration successful! You can now log in.' } });
     }
-  };
+  }
 
 
   return (

@@ -45,12 +45,12 @@ const login = async (request, response) => {
             return response.status(401).json({ error: 'Invalid credentials.' });
         }
 
-        // If MFA is enabled, signal to the frontend that verification is required
+        // if MFA is enabled, signal to the frontend that verification is required
         if (user.mfaEnabled) {
             return response.status(200).json({ mfaRequired: true, userId: user.id });
         }
 
-        // If MFA is not enabled, issue JWT immediately
+        // if MFA is not enabled, issue JWT immediately
         const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
         response.status(200).json({ token });
     } catch (error) {
@@ -124,18 +124,68 @@ const verifyMfaSetup = async (request, response) => {
             secret: user.mfaSecret,
             encoding: 'base32',
             token,
-        });
+        })
 
         if (isVerified) {
-            await User.findByIdAndUpdate(request.user.id, { isMfaEnabled: true });
-            return response.status(200).json({ message: 'MFA has been successfully enabled.' });
+            await User.findByIdAndUpdate(request.user.id, { mfaEnabled: true });
+            return response.status(200).json({ message: 'MFA has been successfully enabled.' })
         }
 
         response.status(400).json({ error: 'Invalid MFA token.' });
     } catch (error) {
-        response.status(500).json({ error: 'Server error during MFA verification.' });
+        response.status(500).json({ error: 'Server error during MFA verification.' })
     }
 };
+
+const disableMfa = async (request, response) => {
+    try {
+        await User.findByIdAndUpdate(request.user.id, {
+            mfaEnabled: false,
+            mfaSecret: '', // Clear the secret for security
+        });
+        response.status(200).json({ message: 'MFA has been disabled.' })
+    } catch (error) {
+        response.status(500).json({ error: 'Server error while disabling MFA.' })
+    }
+};
+
+const changePassword = async (request, response) => {
+    const { currentPassword, newPassword } = request.body;
+    
+    // Basic validation
+    if (!currentPassword || !newPassword) {
+        return response.status(400).json({ error: 'Please fill in all fields.' })
+    }
+
+    if (newPassword.length < 6) {
+        return response.status(400).json({ error: 'New password must be at least 6 characters long.' })
+    }
+
+    try {
+        const user = await User.findById(request.user.id)
+        if (!user) {
+            return response.status(404).json({ error: 'User not found.' })
+        }
+
+        // Check if the current password is correct
+        const isMatch = await bcrypt.compare(currentPassword, user.password)
+        if (!isMatch) {
+            return response.status(400).json({ error: 'Incorrect current password.' })
+        }
+
+        // Hash the new password
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        // Update the password
+        user.password = hashedPassword;
+        await user.save();
+
+        response.status(200).json({ message: 'Password changed successfully.' })
+    } catch (error) {
+        response.status(500).json({ error: 'Server error while changing password.' })
+    }
+}
 
 module.exports = {
     register,
@@ -144,4 +194,6 @@ module.exports = {
     setupMfa,
     verifyMfaSetup,
     getCurrentUser,
+    disableMfa,
+    changePassword
 };

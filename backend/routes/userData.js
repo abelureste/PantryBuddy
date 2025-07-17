@@ -6,6 +6,8 @@ const {
     setupMfa,
     verifyMfaSetup,
     getCurrentUser,
+    disableMfa,
+    changePassword
 } = require('../controllers/userController');
 
 const { protect } = require('../middleware/userMiddleware');
@@ -21,5 +23,7 @@ router.post('/login/mfa', verifyLoginMfa);
 router.get('/user', protect, getCurrentUser)
 router.post('/mfa/setup', protect, setupMfa);
 router.post('/mfa/verify', protect, verifyMfaSetup);
+router.post('/mfa/disable', protect, disableMfa);
+router.post('/change-password', protect, changePassword);
 
 module.exports = router;
