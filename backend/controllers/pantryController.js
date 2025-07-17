@@ -1,25 +1,31 @@
 // Contains code interacting with MongoDB database
 
 const PantryItems = require('../models/pantryModel')
-const PantryStats = require('../models/pantryStatsModel') // <-- Import the new stats model
+const PantryStats = require('../models/pantryStatsModel')
 const mongoose = require('mongoose')
 
 // get all pantry items
 const allPantryItems = async (request, response) => {
+    const user_id = request.user._id;
+
     const newlyExpiredItems = await PantryItems.find({
+        user_id: user_id,
         expirationDate: { $lte: new Date() },
         isExpired: false
-    });
+    })
 
     if (newlyExpiredItems.length > 0) {
-        // Use the new model to increment the expired count
-        await PantryStats.findOneAndUpdate({}, { $inc: { itemsExpired: newlyExpiredItems.length } }, { upsert: true });
+        await PantryStats.findOneAndUpdate(
+            { user_id: user_id },
+            { $inc: { itemsExpired: newlyExpiredItems.length } }, 
+            { upsert: true, new: true }
+        )
 
         const idsToUpdate = newlyExpiredItems.map(item => item._id);
         await PantryItems.updateMany({ _id: { $in: idsToUpdate } }, { $set: { isExpired: true } });
     }
 
-    const pantryItems = await PantryItems.find({}).sort({createdAt: -1})
+    const pantryItems = await PantryItems.find({ user_id }).sort({createdAt: -1})
     response.status(200).json(pantryItems)
 }
 
@@ -49,15 +55,19 @@ const newPantryItem = async (request, response) => {
     if(emptyFields.length > 0) return response.status(400).json({ error: 'Please fill in all fields', emptyFields})
 
     try {
-        const pantryItem = await PantryItems.create({name, quantity, expirationDate})
-        // Use the new model to increment the total items added count
-        await PantryStats.findOneAndUpdate({}, { $inc: { totalItemsAdded: 1 } }, { upsert: true });
-        response.status(200).json(pantryItem)
+        const user_id = request.user._id
+
+        const pantryItem = await PantryItems.create({name, quantity, expirationDate, user_id: user_id}) 
+        
+        await PantryStats.findOneAndUpdate(
+            { user_id: user_id }, // <-- Find by user_id
+            { $inc: { totalItemsAdded: 1 } }, 
+            { upsert: true, new: true } // Create if it doesn't exist
+        )
     } catch (error) {
         response.status(400).json({error: error.message})
     }
 }
-
 
 // delete a pantry item
 const deletePantryItem = async (request, response) => {

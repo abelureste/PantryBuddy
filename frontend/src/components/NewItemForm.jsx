@@ -12,13 +12,16 @@ const NewItemForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
+        const token = localStorage.getItem('token');
+
         const pantryItem = {name, quantity, expirationDate}
 
         const response = await fetch('/api/pantryData', {
             method: 'POST',
             body: JSON.stringify(pantryItem),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         })
         const json = await response.json()

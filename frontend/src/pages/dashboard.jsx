@@ -36,12 +36,16 @@ const getExpiringSoonItems = (items) => {
 
 const Dashboard = () => {
     const {pantryItems, dispatch} = usePantryItemContext()
-    const [stats, setStats] = useState({ totalItemsAdded: 0, itemsExpired: 0 });
-
+    const [stats, setStats] = useState({ totalItemsAdded: 0, itemsExpired: 0 })
+    const [user, setUser] = useState(null)
 
     useEffect(() => {
         const fetchPantryData = async () => {
-            const response = await fetch('/api/pantryData')
+            const token = localStorage.getItem('token')
+            if (!token) return; // Don't fetch if no token
+            const response = await fetch('/api/pantryData', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
             const json = await response.json()
 
             if (response.ok) {
@@ -58,8 +62,22 @@ const Dashboard = () => {
             }
         }
 
+        const fetchUserData = async () => {
+            const token = localStorage.getItem('token')
+            if (token) {
+                const response = await fetch('/api/userData/user', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                })
+                const json = await response.json()
+                if (response.ok) {
+                    setUser(json)
+                }
+            }
+        }
+
         fetchPantryData()
         fetchPantryStats()
+        fetchUserData()
     }, [dispatch])
 
     const itemsExpiringSoon = getExpiringSoonItems(pantryItems).slice(0, 3)
@@ -72,7 +90,7 @@ const Dashboard = () => {
     return (
         <div>
             <div className="dashboardWelcome">
-                <h3 className="dashboardWelcomeLeft">Welcome, user</h3>
+                <h3 className="dashboardWelcomeLeft">Welcome, {user ? user.email.split('@')[0] : 'user'}</h3>
                 <TodaysDate/>
             </div>
             <div className="dashboardInfo"> 

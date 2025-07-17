@@ -9,7 +9,11 @@ const {
     updatePantryItem
 } = require('../controllers/pantryController')
 
+const { protect } = require('../middleware/userMiddleware')
+
 const router = express.Router()
+
+router.use(protect)
 
 // GET all pantry data
 router.get('/', allPantryItems)

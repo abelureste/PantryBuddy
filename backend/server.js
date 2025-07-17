@@ -18,6 +18,7 @@ const pantryRoutes = require('./routes/pantryData')
 const recipeRoutes = require('./routes/recipeData')
 const aiRoutes = require('./routes/aiData')
 const pantryStatsRoutes = require('./routes/pantryStatsData')
+const userRoutes = require('./routes/userData')
 
 app.use((request, response, next) => {
     console.log(request.path, request.method)
@@ -29,6 +30,7 @@ app.use('/api/pantryData', pantryRoutes)
 app.use('/api/recipeData', recipeRoutes)
 app.use('/api/aiData', aiRoutes)
 app.use('/api/pantryStatsData', pantryStatsRoutes)
+app.use('/api/userData', userRoutes)
 
 // connect to database
 mongoose.connect(process.env.MONG_URI)

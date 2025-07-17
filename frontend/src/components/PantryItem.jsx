@@ -5,8 +5,17 @@ const PantryItem = ({ pantryItem }) => {
     const { dispatch } = usePantryItemContext()
 
     const handleClick = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            console.error('You must be logged in to delete an item.');
+            return;
+        }
+
         const response = await fetch('/api/pantryData/' + pantryItem._id, {
-            method: 'DELETE'
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
         })
         const json = await response.json()
 

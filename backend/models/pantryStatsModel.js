@@ -11,7 +11,12 @@ const pantryStatsSchema = new Schema ({
     itemsExpired: {
         type: Number,
         default: 0
-    }
+    },
+    user_id: {
+        type: String,
+        required: true,
+        unique: true
+    },
 })
 
 module.exports = mongoose.model('PantryStats', pantryStatsSchema)

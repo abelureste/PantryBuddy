@@ -12,7 +12,10 @@ const PantryInventory = () => {
 
     useEffect(() => {
         const fetchPantryData = async () => {
-            const response = await fetch('/api/pantryData')
+            const token = localStorage.getItem('token');
+            const response = await fetch('/api/pantryData', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            })
             const json = await response.json()
 
             if (response.ok) {

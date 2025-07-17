@@ -5,6 +5,7 @@ const {
     verifyLoginMfa,
     setupMfa,
     verifyMfaSetup,
+    getCurrentUser,
 } = require('../controllers/userController');
 
 const { protect } = require('../middleware/userMiddleware');
@@ -17,6 +18,7 @@ router.post('/login', login);
 router.post('/login/mfa', verifyLoginMfa);
 
 // Protected routes (require a valid JWT)
+router.get('/user', protect, getCurrentUser)
 router.post('/mfa/setup', protect, setupMfa);
 router.post('/mfa/verify', protect, verifyMfaSetup);
 

@@ -10,6 +10,7 @@ export default defineConfig({
       '/api/recipeData': 'http://localhost:4000',
       '/api/expiredData': 'http://localhost:4000',
       '/api/pantryStats': 'http://localhost:4000',
+      '/api/userData' : 'http://localhost:4000',
     }
   }
 })

@@ -51,11 +51,17 @@ const login = async (request, response) => {
         }
 
         // If MFA is not enabled, issue JWT immediately
-        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+        const token = jwt.sign({ id: user.id, email: user.email }, process.env.JWT_SECRET, { expiresIn: '1h' });
         response.status(200).json({ token });
     } catch (error) {
         response.status(500).json({ error: 'Server error during login.' });
     }
+};
+
+// get the current user
+const getCurrentUser = async (request, response) => {
+    // request.user is attached by the 'protect' middleware
+    response.status(200).json(request.user);
 };
 
 // verify MFA token after login
@@ -89,7 +95,6 @@ const verifyLoginMfa = async (request, response) => {
         response.status(500).json({ error: 'Server error during MFA verification.' });
     }
 };
-
 
 // generate MFA secret and QR code
 const setupMfa = async (request, response) => {
@@ -138,4 +143,5 @@ module.exports = {
     verifyLoginMfa,
     setupMfa,
     verifyMfaSetup,
+    getCurrentUser,
 };

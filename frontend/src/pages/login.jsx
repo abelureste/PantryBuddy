@@ -1,15 +1,41 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null);
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
+    setError(null)
 
-    // Perform login logic here, e.g., send a request to your backend
-    console.log(email, password);
+    const response = await fetch('/api/userData/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password }),
+    });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+      setError(json.error)
+    }
+    if (response.ok) {
+      // Handle successful login
+      if (json.token) {
+        // Store the token (e.g., in localStorage) and update the UI
+        localStorage.setItem('token', json.token)
+        console.log('Login successful')
+        navigate('/dashboard')
+        // Redirect to the dashboard or another protected page
+      } else if (json.mfaRequired) {
+        // Handle MFA flow
+        console.log('MFA required')
+        // Redirect to an MFA verification page
+      }
+    }
   };
 
   return (
