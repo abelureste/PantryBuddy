@@ -51,8 +51,7 @@ const newPantryItem = async (request, response) => {
     let emptyFields = []
 
     if(!name) emptyFields.push('name')
-    if(!quantity) emptyFields.push('quantity')
-    if(emptyFields.length > 0) return response.status(400).json({ error: 'Please fill in all fields', emptyFields})
+    if(emptyFields.length > 0) return response.status(400).json({ error: 'Please add an item name', emptyFields})
 
     try {
         const user_id = request.user._id

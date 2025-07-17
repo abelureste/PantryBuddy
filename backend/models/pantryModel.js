@@ -11,7 +11,7 @@ const pantrySchema = new Schema ({
     },
     quantity: {
         type: Number,
-        required: true
+        required: false
     },
     expirationDate: {
         type: Date,

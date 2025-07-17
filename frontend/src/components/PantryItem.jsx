@@ -24,6 +24,18 @@ const PantryItem = ({ pantryItem }) => {
         }
     }
 
+    const quantity = pantryItem.quantity
+
+    const quantityStatus = () => {
+        if (quantity === null) {
+            return null
+        }
+
+        else {
+            return <p><strong>Quantity: </strong>{quantity}</p>
+        }
+    }
+
     const expirationDate = new Date(pantryItem.expirationDate)
 
     const expirationStatus = () => {
@@ -50,7 +62,7 @@ const PantryItem = ({ pantryItem }) => {
     return (
         <div className="pantryItem">
             <h4>{pantryItem.name}</h4>
-            <p><strong>Quantity: </strong>{pantryItem.quantity}</p>
+            {quantityStatus()}
             {pantryItem.expirationDate && new Date(pantryItem.expirationDate).getTime() !== 0 && (
                 <>
                     <p><strong>Expiration Date: </strong>{format(new Date(pantryItem.expirationDate), 'MM/dd/yyyy')}</p>

@@ -49,7 +49,7 @@ const NewItemForm = () => {
             <input type="text" onChange={(e) => setName(e.target.value)} value={name} className={emptyFields.includes('name') ? 'error' : ''}></input>
 
             <label>Quantity:</label>
-            <input type="number" onChange={(e) => setQuantity(e.target.value)} value={quantity} className={emptyFields.includes('quantity') ? 'error' : ''}></input>
+            <input type="number" onChange={(e) => setQuantity(e.target.value)} value={quantity}></input>
 
             <label>Expiration Date:</label>
             <input type="date" onChange={(e) => setExpirationDate(e.target.value)} value={expirationDate}></input>
