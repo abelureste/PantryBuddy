@@ -38,6 +38,7 @@ const Dashboard = () => {
     const {pantryItems, dispatch} = usePantryItemContext()
     const [stats, setStats] = useState({ totalItemsAdded: 0, itemsExpired: 0 })
     const [user, setUser] = useState(null)
+    const [recipes, setRecipes] = useState([])
 
     useEffect(() => {
         const fetchPantryData = async () => {
@@ -81,9 +82,19 @@ const Dashboard = () => {
             }
         }
 
+        const fetchRecipes = async () => {
+            const response = await fetch('/api/recipeData')
+            const json = await response.json()
+
+            if (response.ok) {
+                setRecipes(json)
+            }
+        }
+
         fetchPantryData()
         fetchPantryStats()
         fetchUserData()
+        fetchRecipes()
     }, [dispatch])
 
 const handleReset = async () => {
@@ -152,10 +163,10 @@ const handleReset = async () => {
             </div>
             <div className="dashboardRecipes">
                 <h1>Favorite Recipes</h1>
-                <div className='recipeCardMaster'>
-                    <RecipeCard/>
-                    <RecipeCard/>
-                    <RecipeCard/>
+                <div className="recipeCardMaster">
+                    {recipes.slice(0, 4).map(recipe => (
+                        <RecipeCard key={recipe._id} recipe={recipe} />
+                    ))}
                 </div>
             </div>
         </div>

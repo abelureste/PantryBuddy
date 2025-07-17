@@ -9,6 +9,8 @@ const {
     updateRecipe,
 } = require('../controllers/recipeController')
 
+const { protect } = require('../middleware/userMiddleware')
+
 const router = express.Router()
 
 // GET all recipes
@@ -18,12 +20,12 @@ router.get('/', allRecipes)
 router.get('/:id', getRecipe)
 
 // POST a new recipe
-router.get('/', newRecipe)
+router.post('/', protect, newRecipe)
 
 // DELETE a recipe
-router.get('/:id', deleteRecipe)
+router.delete('/:id', protect, deleteRecipe)
 
 // UPDATE a recipe
-router.get('/:id', updateRecipe)
+router.patch('/:id', protect, updateRecipe)
 
 module.exports = router

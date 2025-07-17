@@ -5,6 +5,7 @@ import Homepage from './pages/homepage'
 import Dashboard from './pages/dashboard'
 import PantryInventory from './pages/pantryinventory'
 import Recipes from './pages/recipes'
+import RecipePage from './pages/RecipePage'
 import Login from './pages/login'
 import Register from './pages/register'
 
@@ -25,6 +26,7 @@ function App() {
             <Route path='/dashboard' element={<Dashboard />}/>
             <Route path='/mypantry' element={<PantryInventory />}/>
             <Route path='/recipes' element={<Recipes />}/>
+            <Route path='/recipes/:id' element={<RecipePage />}/>            
             <Route path='/login' element={<Login />}/>
             <Route path='/register' element={<Register />} />
           </Routes>

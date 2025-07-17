@@ -415,6 +415,8 @@ div.error {
   background-color: #fff;
   border-radius: 4px;
   box-shadow: 2px 2px 5px rgba(0,0,0,0.05);
+  text-decoration: none;
+  color: black;
 }
 .recipeCard img {
   width: 100%;

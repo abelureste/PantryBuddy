@@ -1,11 +1,11 @@
-// Contains code interacting with MongoDB database
+// backend/controllers/recipeController.js
 
 const Recipe = require('../models/recipeModel')
 const mongoose = require('mongoose')
 
 // get all recipes
 const allRecipes = async (request, response) => {
-    const recipes = await Recipe.find({})
+    const recipes = await Recipe.find({}).sort({createdAt: -1})
 
     response.status(200).json(recipes)
 }
@@ -28,7 +28,7 @@ const getRecipe = async (request, response) => {
 
 // create a new recipe
 const newRecipe = async (request, response) => {
-    const {recipeName, recipeDescription, recipeIngredients, recipeDirections} = request.body
+    const {recipeName, recipeDescription, recipeIngredients, recipeInstructions} = request.body
 
     let emptyFields = []
 
@@ -39,7 +39,7 @@ const newRecipe = async (request, response) => {
         return response.status(400).json({ error: 'Please fill in the recipe name field', emptyFields})
     }
     try {
-        const recipe = await Recipe.create({recipeName, recipeDescription, recipeIngredients, recipeDirections})
+        const recipe = await Recipe.create({recipeName, recipeDescription, recipeIngredients, recipeInstructions})
         response.status(200).json(recipe)
     } catch (error) {
         response.status(400).json({error: error.message})

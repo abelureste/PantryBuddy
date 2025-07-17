@@ -40,7 +40,7 @@ const recipeSchema = new Schema ({
         type: [ingredientSchema],
         required: true
     },
-    recipeIntructions: {
+    recipeInstructions: {
         type: [instructionsSchema],
         required: true
     },

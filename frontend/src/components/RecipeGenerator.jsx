@@ -37,6 +37,35 @@ const RecipeGenerator = () => {
     setLoading(false);
   }
 
+  const handleSave = async () => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        console.error('You must be logged in to save a recipe.');
+        return;
+    }
+
+    const response = await fetch('/api/recipeData', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify(aiResponse)
+    });
+
+    const json = await response.json();
+
+    if (response.ok) {
+        // Optionally, you can update the UI to show that the recipe has been saved
+        console.log('Recipe saved successfully', json);
+        alert('Recipe saved!');
+    } else {
+        console.error('Failed to save recipe:', json.error);
+        alert('Failed to save recipe.');
+    }
+  };
+
+
   return (
     <div>
       <h1>Recipe Generator</h1>
@@ -74,7 +103,9 @@ const RecipeGenerator = () => {
                     {instruction.instructionDescription}
                   </p>
                 ))}
-              </div>
+              </div><form>
+                <button onClick={handleSave}>Save Recipe</button>
+              </form>
             </div>
           ) : (
             <p>{aiResponse}</p>
