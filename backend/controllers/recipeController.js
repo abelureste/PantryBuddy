@@ -23,7 +23,7 @@ const getRecipe = async (request, response) => {
     if (!recipe) {
         return response.status(400).json({error: 'No recipe found'})
     }
-    response.status(200).json({recipe})
+    response.status(200).json(recipe)
 }
 
 // create a new recipe

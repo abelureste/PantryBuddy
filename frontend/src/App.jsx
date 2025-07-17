@@ -26,7 +26,7 @@ function App() {
             <Route path='/dashboard' element={<Dashboard />}/>
             <Route path='/mypantry' element={<PantryInventory />}/>
             <Route path='/recipes' element={<Recipes />}/>
-            <Route path='/recipes/:id' element={<RecipePage />}/>            
+            <Route path='/recipe/:id' element={<RecipePage />}/>            
             <Route path='/login' element={<Login />}/>
             <Route path='/register' element={<Register />} />
           </Routes>

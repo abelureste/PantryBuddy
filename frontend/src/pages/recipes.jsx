@@ -4,6 +4,7 @@ import RecipeGenerator from "../components/RecipeGenerator"
 
 const Recipes = () => {
     const [recipes, setRecipes] = useState([])
+    const [showAll, setShowAll] = useState(false);
 
     useEffect(() => {
         const fetchRecipes = async () => {
@@ -18,15 +19,26 @@ const Recipes = () => {
         fetchRecipes()
     }, [])
 
+    const handleDeleteRecipe = (deletedRecipeId) => {
+        setRecipes(recipes.filter(recipe => recipe._id !== deletedRecipeId));
+    };
+
+    const visibleRecipes = showAll ? recipes : recipes.slice(0, 8);
+
     return (
         <div>
             <div className="dashboardRecipes">
                 <h1>Recipes</h1>
                 <div className="recipeCardMaster">
-                    {recipes.map(recipe => (
-                        <RecipeCard key={recipe._id} recipe={recipe} />
+                    {visibleRecipes.map(recipe => (
+                        <RecipeCard key={recipe._id} recipe={recipe} onDelete={handleDeleteRecipe} />
                     ))}
                 </div>
+                {recipes.length > 8 && !showAll && (
+                    <form className="viewMoreContainer">
+                        <button className="viewMoreButton" onClick={() => setShowAll(true)}>View More</button>
+                    </form>
+                )}
             </div>
             <div className="recipeSuggest">
                 <RecipeGenerator/>
@@ -35,4 +47,4 @@ const Recipes = () => {
     )
 }
 
-export default Recipes
+export default Recipes;

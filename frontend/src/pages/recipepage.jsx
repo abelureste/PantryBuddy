@@ -7,41 +7,41 @@ const RecipePage = () => {
 
     useEffect(() => {
         const fetchRecipe = async () => {
-            const response = await fetch(`/api/recipeData/${id}`);
-            const json = await response.json();
+            const response = await fetch(`/api/recipeData/${id}`)
+            const json = await response.json()
 
             if (response.ok) {
-                setRecipe(json.recipe);
+                setRecipe(json)
             }
-        };
+        }
 
-        fetchRecipe();
-    }, [id]);
+        fetchRecipe()
+    }, [id])
 
     if (!recipe) {
-        return <div>Loading...</div>;
+        return <div>Loading...</div>
     }
 
     return (
-        <div className="recipePage">
+        <div className="recipeSuggest">
             <h1>{recipe.recipeName}</h1>
             <p>{recipe.recipeDescription}</p>
             
             <h3>Ingredients</h3>
-            <ul>
+            <div>
                 {recipe.recipeIngredients.map((ingredient, index) => (
-                    <li key={index}>
+                    <p key={index}>
                         {ingredient.ingredientQuantity} {ingredient.ingredientName}
-                    </li>
+                    </p>
                 ))}
-            </ul>
+            </div>
 
             <h3>Instructions</h3>
-            <ol>
+            <div>
                 {recipe.recipeInstructions.map((instruction, index) => (
-                    <li key={index}>{instruction.instructionDescription}</li>
+                    <p key={index}>{instruction.instructionDescription}</p>
                 ))}
-            </ol>
+            </div>
         </div>
     );
 };
