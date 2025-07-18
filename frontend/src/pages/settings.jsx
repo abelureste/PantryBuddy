@@ -17,6 +17,8 @@ const Settings = () => {
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    // state for pantry stats
+    const [stats, setStats] = useState({ totalItemsAdded: 0, itemsExpired: 0 });
 
     const fetchUserData = async () => {
         const authToken = localStorage.getItem('token');
@@ -39,9 +41,25 @@ const Settings = () => {
             navigate('/login');
         }
     };
+    
+    const fetchPantryStats = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) return;
+
+        const response = await fetch('/api/pantryStatsData', {
+            headers: { 'Authorization': `Bearer ${token}` }
+        })
+        const json = await response.json()
+
+        if (response.ok) {
+            setStats(json)
+        }
+    }
+
 
     useEffect(() => {
         fetchUserData();
+        fetchPantryStats();
     }, [navigate]);
 
     const handleEnableMfaClick = async () => {
@@ -158,16 +176,42 @@ const Settings = () => {
         }
     };
 
+    const handleResetStats = async () => {
+        if (window.confirm("Are you sure you want to reset your statistics? This cannot be undone.")) {
+            const token = localStorage.getItem('token')
+            if (!token) {
+                console.error('You must be logged in to reset stats.')
+                return;
+            }
+    
+            const response = await fetch('/api/pantryStatsData', {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+    
+            const json = await response.json();
+    
+            if (response.ok) {
+                setStats(json);
+                setMessage('Pantry statistics have been reset.');
+            } else {
+                setError(json.error || 'Failed to reset stats.');
+            }
+        }
+    }
+
 
     if (!user) {
         return <div>Loading...</div>;
     }
 
     return (
-<div className="settingsCard">
+        <div className="settingsCard">
             <h1>Account Settings</h1>
             {error && <div className="error">{error}</div>}
-            {message && <div className="message">{message}</div>}
+            {message && <div className="success">{message}</div>}
 
             <p><strong>Email:</strong> {user.email}</p>
 
@@ -222,11 +266,11 @@ const Settings = () => {
                         <div className="qrCodeContainer">
                             <p>1. Scan this QR code with your authenticator app:</p>
                             <img src={qrCode} alt="MFA QR Code" />
-                            <p>Or manually enter this secret: <strong>{secret}</strong></p>
+                            <p>Or manually enter this code: <strong>{secret}</strong></p>
                         </div>
                     )}
                     <form onSubmit={handleVerify}>
-                        <label>2. Enter the token from your authenticator app:</label>
+                        <label>2. Enter the code from your authenticator app:</label>
                         <input
                             type="text"
                             value={token}
@@ -239,6 +283,16 @@ const Settings = () => {
                     </form>
                 </div>
             )}
+
+            <hr style={{margin: '20px 0'}} />
+
+            {/* Pantry Statistics Section */}
+            <div className="pantryStatsContainer">
+                <p><strong>Pantry Statistics</strong></p>
+                <form>
+                    <button type="button" onClick={handleResetStats} className="disableButton">Reset Statistics</button>
+                </form>
+            </div>
         </div>
     );
 };

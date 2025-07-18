@@ -1,18 +1,45 @@
-import { useRecipeGeneratorContext } from '../hooks/useRecipeGeneratorContext'
+import { useRecipeGeneratorContext } from '../hooks/useRecipeGeneratorContext';
+import { usePantryItemContext } from '../hooks/usePantryItemContext';
+import { useState, useEffect } from "react";
 
 const RecipeGenerator = () => {
-  const { prompt, setPrompt, aiResponse, setAiResponse, loading, setLoading } = useRecipeGeneratorContext()
+  const { prompt, setPrompt, aiResponse, setAiResponse, loading, setLoading } = useRecipeGeneratorContext();
+  const { pantryItems, dispatch } = usePantryItemContext();
+  const [usePantry, setUsePantry] = useState(false);
+
+  useEffect(() => {
+    const fetchPantryData = async () => {
+        const token = localStorage.getItem('token');
+        if (token && !pantryItems) {
+            const response = await fetch('/api/pantryData', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            const json = await response.json();
+
+            if (response.ok) {
+                dispatch({type: 'SET_PANTRY_ITEM', payload: json});
+            }
+        }
+    }
+    fetchPantryData();
+  }, [dispatch, pantryItems]);
 
   const handleSubmit = async (e) => {
     console.log('Submitted');
     e.preventDefault();
     setLoading(true);
 
+    let finalPrompt = prompt;
+    if (usePantry && pantryItems) {
+      const pantryIngredients = pantryItems.map(item => item.name).join(', ');
+      finalPrompt = `I have the following ingredients in my pantry: ${pantryIngredients}. I want to make ${prompt}. Find me a recipe that uses some of my pantry ingredients if possible, if not possible do not use the pantry ingredients.`
+    }
+
     try {
       const response = await fetch('/api/aiData', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt }),
+        body: JSON.stringify({ prompt: finalPrompt }),
       });
 
       const data = await response.json();
@@ -71,8 +98,19 @@ const RecipeGenerator = () => {
       <h1>Recipe Generator</h1>
       <p>Don't know what to cook? Generate a recipe based on your pantry inventory.</p>
       <form className="recipeSuggestInput" onSubmit={handleSubmit}>
-        <label>What are you feeling?</label>
-        <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)}/>
+        <div>
+            <label>What are you feeling?</label>
+            <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)}/>
+        </div>
+        <div className="checkbox-container">
+          <input
+            type="checkbox"
+            id="usePantry"
+            checked={usePantry}
+            onChange={(e) => setUsePantry(e.target.checked)}
+          />
+          <label htmlFor="usePantry">Use Pantry Inventory</label>
+        </div>
         <button type="submit">Generate</button>
       </form>
 

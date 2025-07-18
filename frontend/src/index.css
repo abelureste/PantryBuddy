@@ -4,6 +4,7 @@
 /* layout */
 :root {
   --primary: #365e8c;
+  --primarydark: #2c5077;
   --error: #e7195a;
   --success: #6ab32f;
 }
@@ -335,6 +336,9 @@ form button {
   border-radius: 4px;
   cursor: pointer;
 }
+form button:hover {
+  background: var(--primarydark);
+}
 div.error {
   padding: 10px;
   background: #ffefef;
@@ -373,21 +377,49 @@ div.success {
 .recipeSuggest p {
   margin: 5px 0 20px 0;
 }
-.recipeSuggest input {
-  margin: 0 10px 0 10px; 
-}
 .recipeSuggestInput {
-  display: inline-flex;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   width: 100%;
+  align-items: center;
+}
+.recipeSuggestInput > div {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
 }
 .recipeSuggestInput label {
-  margin: auto;
-  width: 200px;
+    margin-bottom: 5px;
+}
+.recipeSuggestInput input[type="text"] {
+    width: 50%;
+    margin-bottom: 10px;
+}
+.recipeSuggestInput .checkbox-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    margin-bottom: 10px;
+}
+.recipeSuggestInput .checkbox-container input[type="checkbox"] {
+    display: inline-block;
+    width: auto;
+    margin: 0 10px 0 0;
+    accent-color: var(--primary);
+}
+.recipeSuggestInput .checkbox-container label {
+    display: inline-block;
+    margin: 0;
+    width: auto;
 }
 .recipeSuggestGrid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 0 20px; /* Adjust the gap between columns as needed */
+  gap: 0 20px;
 }
 .recipeSuggestIngredients {
   flex: 1;

@@ -104,31 +104,6 @@ const Dashboard = () => {
         fetchRecipes()
     }, [dispatch])
 
-const handleReset = async () => {
-        if (window.confirm("Are you sure you want to reset your statistics? This cannot be undone.")) {
-            const token = localStorage.getItem('token')
-            if (!token) {
-                console.error('You must be logged in to reset stats.')
-                return;
-            }
-    
-            const response = await fetch('/api/pantryStatsData', {
-                method: 'DELETE',
-                headers: {
-                    'Authorization': `Bearer ${token}`
-                }
-            });
-    
-            const json = await response.json();
-    
-            if (response.ok) {
-                setStats(json);
-            } else {
-                console.error('Failed to reset stats:', json.error)
-            }
-        }
-    }
-
     const itemsExpiringSoon = getExpiringSoonItems(pantryItems).slice(0, 3)
 
     const itemsUsed = stats.totalItemsAdded - stats.itemsExpired;
@@ -149,11 +124,8 @@ const handleReset = async () => {
                     <h3>Statistics</h3>
                     <p>
                         Total Items Added: {stats.totalItemsAdded} <br/>
-                        Items Thrown Away: {stats.itemsExpired}
+                        Total Items Expired: {stats.itemsExpired}
                     </p>
-                    <form>
-                        <button onClick={handleReset}>Reset Statistics</button>
-                    </form>
                 </div>
                 <div className="dashboardInfoRight">
                     <h1>Expiring Soon</h1>
